@@ -6,13 +6,23 @@ const PopupEditUser = ({ id, newUsers, onUpdateUser }) => {
   const [editUserName, setEditUserName] = useState("");
   const [editEmail, setEditEmail] = useState("");
 
+  // useEffect(() => {
+  //   if (newUsers && newUsers.length > 0) {
+  //     setSelectedUser(newUsers.user);
+  //     setEditUserName(newUsers.username);
+  //     setEditEmail(newUsers.email);
+  //   }
+  // }, []);
   useEffect(() => {
     if (newUsers && newUsers.length > 0) {
-      setSelectedUser(newUsers.user);
-      setEditUserName(newUsers.username);
-      setEditEmail(newUsers.email);
+      const selectedUser = newUsers.find((user) => user.id === id);
+      if (selectedUser) {
+        setEditName(selectedUser.name);
+        setEditUserName(selectedUser.username);
+        setEditEmail(selectedUser.email);
+      }
     }
-  }, []);
+  }, [newUsers, id]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

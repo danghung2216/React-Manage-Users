@@ -11,48 +11,19 @@ import { MdDelete } from "react-icons/md";
 import "./Manage.Moudle.css";
 
 import PopupEditUser from "./PopupEditUser";
-import { RiZzzLine } from "react-icons/ri";
+import "animate.css";
+
+// import { RiZzzLine } from "react-icons/ri";
 interface Pertional {
   id: number;
   name: string;
   username: string;
   email: string;
 }
-const dataUser = [
-  {
-    id: 1,
-    name: "John Doe",
-    username: "johndoe",
-    email: "johndoe@example.com",
-  },
-  {
-    id: 2,
-    name: "Jane Doe",
-    username: "janedoe",
-    email: "janedoe@example.com",
-  },
-  {
-    id: 3,
-    name: "Alice Johnson",
-    username: "alicejohnson",
-    email: "alicejohnson@example.com",
-  },
-  {
-    id: 4,
-    name: "Bob Smith",
-    username: "bobsmith",
-    email: "bobsmith@example.com",
-  },
-  {
-    id: 5,
-    name: "Emily Davis",
-    username: "emilydavis",
-    email: "emilydavis@example.com",
-  },
-];
 
 const ManegeUser = () => {
-  //   const API_URL = "https://jsonplaceholder.typicode.com/users";
+  const API_URL = "https://jsonplaceholder.typicode.com/users";
+
   const [newUsers, setNewUsers] = useState<Pertional[]>([]);
   const [newName, setNewName] = useState("");
   const [newUserName, setNewUserName] = useState("");
@@ -64,8 +35,21 @@ const ManegeUser = () => {
   const [errorEmail, setErrorEmail] = useState("");
 
   const [isEditUserOpen, setIsEditUserOpen] = useState(false);
+  // useEffect(() => {
+  //   return setNewUsers(dataUser);
+  // }, []);
   useEffect(() => {
-    return setNewUsers(dataUser);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const dataUser = await response.json();
+        setNewUsers(dataUser);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleAddNewUser = () => {
@@ -120,8 +104,6 @@ const ManegeUser = () => {
   const handleEditUser = (userId: number) => {
     // console.log(userId);
     setSelectedId(userId);
-
-    // newUsers.find((user) => user.id === userId);
     setIsEditUserOpen(true);
   };
 
@@ -129,7 +111,7 @@ const ManegeUser = () => {
     <Fragment>
       <div className="user-container overflow-auto">
         {isEditUserOpen ? (
-          <div className="popup absolute transition place-items-center translate-y-2/4 animate-fade-down  overflow-auto w-full animate-ease-linear">
+          <div className="popup absolute transition place-items-center translate-y-2/4 animate__fadeInDown animate_fading overflow-auto w-full ">
             <PopupEditUser
               newUsers={newUsers}
               id={selectedId}
@@ -139,7 +121,7 @@ const ManegeUser = () => {
         ) : undefined}
 
         <div className="user-wrap overflow-auto mx-2">
-          <h1 className="text-4xl text-center my-3">MANAGE USER</h1>
+          <h1 className="text-4xl text-center my-3 font-bold">MANAGE USER</h1>
           <div className="add-user flex w-full justify-around my-3 items-center">
             <p>Add new user:</p>
             <div className="name flex flex-col w-1/5">
