@@ -77,6 +77,7 @@ const ManegeUser = () => {
       };
 
       setNewUsers([...newUsers, newUser]);
+
       setNewName("");
       setNewUserName("");
       setNewEmail("");
